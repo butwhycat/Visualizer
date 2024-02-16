@@ -20,7 +20,6 @@ project(VISUALIZER VERSION 0.0.1)
 # include that subdirectory as part of the build.
 
 
-
 # find_package(JUCE CONFIG REQUIRED)        # If you've installed JUCE to your system
 # or
 add_subdirectory(JUCE)                    # If you've put JUCE in a subdirectory called JUCE
@@ -41,7 +40,7 @@ juce_add_plugin(Visualizer
 		# VERSION ...                               # Set this if the plugin version is different to the project version
 		# ICON_BIG ...                              # ICON_* arguments specify a path to an image file to use as an icon for the Standalone
 		# ICON_SMALL ...
-		# COMPANY_NAME ...                          # Specify the name of the plugin's author
+		COMPANY_NAME butwhycat                      # Specify the name of the plugin's author
 		# IS_SYNTH TRUE/FALSE                       # Is this a synth or an effect?
 		# NEEDS_MIDI_INPUT TRUE/FALSE               # Does the plugin need midi input?
 		# NEEDS_MIDI_OUTPUT TRUE/FALSE              # Does the plugin need midi output?
@@ -49,7 +48,7 @@ juce_add_plugin(Visualizer
 		# EDITOR_WANTS_KEYBOARD_FOCUS TRUE/FALSE    # Does the editor need keyboard focus?
 		# COPY_PLUGIN_AFTER_BUILD TRUE/FALSE        # Should the plugin be installed to a default location after building?
 		PLUGIN_MANUFACTURER_CODE BYCt               # A four-character manufacturer id with at least one upper-case character
-		PLUGIN_CODE visualizer                            # A unique four-character plugin id with exactly one upper-case character
+		PLUGIN_CODE VSlr                            # A unique four-character plugin id with exactly one upper-case character
 		# GarageBand 10.3 requires the first letter to be upper-case, and the remaining letters to be lower-case
 		FORMATS AU VST3 Standalone                  # The formats to build. Other valid formats are: AAX Unity VST AU AUv3
 		PRODUCT_NAME "Visualizer")        # The name of the final executable, which can differ from the target name
