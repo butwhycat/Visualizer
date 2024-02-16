@@ -15,12 +15,17 @@ AudioPluginAudioProcessorEditor::~AudioPluginAudioProcessorEditor() {
 
 //==============================================================================
 void AudioPluginAudioProcessorEditor::paint(juce::Graphics &g) {
-	// (Our component is opaque, so we must completely fill the background with a solid colour)
-	g.fillAll(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));
+	g.fillAll (juce::Colours::darkgrey);
+	g.setColour (juce::Colours::orange);
 
-	g.setColour(juce::Colours::white);
-	g.setFont(15.0f);
-	g.drawFittedText("Hello MAN!", getLocalBounds(), juce::Justification::centred, 1);
+	juce::Path path;
+	path.startNewSubPath (juce::Point<float> (10, 10));
+	path.lineTo (juce::Point<float> (50, 10));
+	path.lineTo (juce::Point<float> (50, 50));
+	path.lineTo (juce::Point<float> (10, 50));
+	path.closeSubPath();
+
+	g.fillPath (path);
 }
 
 void AudioPluginAudioProcessorEditor::resized() {
