@@ -7,7 +7,8 @@
 # information can be found in the CMake docs.
 
 cmake_minimum_required(VERSION 3.22)
-
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
 # The top-level CMakeLists.txt file for a project must contain a literal, direct call to the
 # `project()` command. `project()` sets up some helpful variables that describe source/binary
 # directories, and the current project version. This is a standard CMake command.
@@ -68,8 +69,9 @@ juce_add_plugin(Visualizer
 
 target_sources(Visualizer
 		PRIVATE
-		PluginEditor.cpp
-		PluginProcessor.cpp)
+		src/editor/Polygon.h
+		src/editor/PluginEditor.cpp
+		src/processor/PluginProcessor.cpp)
 
 # `target_compile_definitions` adds some preprocessor definitions to our target. In a Projucer
 # project, these might be passed in the 'Preprocessor Definitions' field. JUCE modules also make use
