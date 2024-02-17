@@ -3,14 +3,13 @@
 #include <juce_audio_processors/juce_audio_processors.h>
 
 //==============================================================================
-class AudioPluginAudioProcessor final : public juce::AudioProcessor {
+class VisualizerAudioProcessor final : public juce::AudioProcessor {
 public:
 	//==============================================================================
-	AudioPluginAudioProcessor();
+	VisualizerAudioProcessor();
 
-	~AudioPluginAudioProcessor() override;
+	~VisualizerAudioProcessor() override;
 
-	//==============================================================================
 	void prepareToPlay(double sampleRate, int samplesPerBlock) override;
 
 	void releaseResources() override;
@@ -21,12 +20,10 @@ public:
 
 	using AudioProcessor::processBlock;
 
-	//==============================================================================
 	juce::AudioProcessorEditor *createEditor() override;
 
 	bool hasEditor() const override;
 
-	//==============================================================================
 	const juce::String getName() const override;
 
 	bool acceptsMidi() const override;
@@ -37,7 +34,6 @@ public:
 
 	double getTailLengthSeconds() const override;
 
-	//==============================================================================
 	int getNumPrograms() override;
 
 	int getCurrentProgram() override;
@@ -48,12 +44,10 @@ public:
 
 	void changeProgramName(int index, const juce::String &newName) override;
 
-	//==============================================================================
 	void getStateInformation(juce::MemoryBlock &destData) override;
 
 	void setStateInformation(const void *data, int sizeInBytes) override;
 
 private:
-	//==============================================================================
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioPluginAudioProcessor)
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (VisualizerAudioProcessor)
 };
