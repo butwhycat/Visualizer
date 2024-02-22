@@ -13,7 +13,7 @@ typedef std::complex<float> Point2D;
 
 class Polygon {
 public:
-	explicit Polygon(const Point2D& center, const float& edgeLength, const int& numEdges)
+	explicit Polygon(const Point2D center, const float edgeLength, const int numEdges)
 		: vertices(nullptr), center(center), edgeLength(edgeLength), numEdges(numEdges) {
 		vertices = new vector<Point2D*>();
 		Point2D vertexOffset = polar(edgeLength / SQRT_2,
