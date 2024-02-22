@@ -1,7 +1,7 @@
 #include "PluginProcessor.h"
 #include "../editor/PluginEditor.h"
 
-VisualizerAudioProcessor::VisualizerAudioProcessor()
+VisualizerProcessor::VisualizerProcessor()
 	: AudioProcessor(BusesProperties()
 #if !JucePlugin_IsMidiEffect
 #if !JucePlugin_IsSynth
@@ -12,13 +12,13 @@ VisualizerAudioProcessor::VisualizerAudioProcessor()
 	) {
 }
 
-VisualizerAudioProcessor::~VisualizerAudioProcessor() = default;
+VisualizerProcessor::~VisualizerProcessor() = default;
 
-const String VisualizerAudioProcessor::getName() const {
+const String VisualizerProcessor::getName() const {
 	return JucePlugin_Name;
 }
 
-bool VisualizerAudioProcessor::acceptsMidi() const {
+bool VisualizerProcessor::acceptsMidi() const {
 #if JucePlugin_WantsMidiInput
 	return true;
 #else
@@ -26,7 +26,7 @@ bool VisualizerAudioProcessor::acceptsMidi() const {
 #endif
 }
 
-bool VisualizerAudioProcessor::producesMidi() const {
+bool VisualizerProcessor::producesMidi() const {
 #if JucePlugin_ProducesMidiOutput
 	return true;
 #else
@@ -34,7 +34,7 @@ bool VisualizerAudioProcessor::producesMidi() const {
 #endif
 }
 
-bool VisualizerAudioProcessor::isMidiEffect() const {
+bool VisualizerProcessor::isMidiEffect() const {
 #if JucePlugin_IsMidiEffect
 	return true;
 #else
@@ -42,44 +42,45 @@ bool VisualizerAudioProcessor::isMidiEffect() const {
 #endif
 }
 
-double VisualizerAudioProcessor::getTailLengthSeconds() const {
+double VisualizerProcessor::getTailLengthSeconds() const {
 	return 0.0;
 }
 
-int VisualizerAudioProcessor::getNumPrograms() {
-	return 1; // NB: some hosts don't cope very well if you tell them there are 0 programs,
+int VisualizerProcessor::getNumPrograms() {
+	return 1;
+	// NB: some hosts don't cope very well if you tell them there are 0 programs,
 	// so this should be at least 1, even if you're not really implementing programs.
 }
 
-int VisualizerAudioProcessor::getCurrentProgram() {
+int VisualizerProcessor::getCurrentProgram() {
 	return 0;
 }
 
-void VisualizerAudioProcessor::setCurrentProgram(int index) {
+void VisualizerProcessor::setCurrentProgram(int index) {
 	ignoreUnused(index);
 }
 
-const String VisualizerAudioProcessor::getProgramName(int index) {
+const String VisualizerProcessor::getProgramName(int index) {
 	ignoreUnused(index);
 	return {};
 }
 
-void VisualizerAudioProcessor::changeProgramName(int index, const String& newName) {
+void VisualizerProcessor::changeProgramName(int index, const String& newName) {
 	ignoreUnused(index, newName);
 }
 
-void VisualizerAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock) {
+void VisualizerProcessor::prepareToPlay(double sampleRate, int samplesPerBlock) {
 	// Use this method as the place to do any pre-playback
 	// initialisation that you need...
 	ignoreUnused(sampleRate, samplesPerBlock);
 }
 
-void VisualizerAudioProcessor::releaseResources() {
+void VisualizerProcessor::releaseResources() {
 	// When playback stops, you can use this as an opportunity to free up any
 	// spare memory, etc.
 }
 
-bool VisualizerAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const {
+bool VisualizerProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const {
 #if JucePlugin_IsMidiEffect
 	ignoreUnused (layouts);
 	return true;
@@ -102,13 +103,13 @@ bool VisualizerAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts
 #endif
 }
 
-void VisualizerAudioProcessor::processBlock(AudioBuffer<float>& buffer,
-                                            MidiBuffer& midiMessages) {
+void VisualizerProcessor::processBlock(AudioBuffer<float>& buffer,
+                                       MidiBuffer& midiMessages) {
 	ignoreUnused(midiMessages);
 
 	ScopedNoDenormals noDenormals;
-	auto totalNumInputChannels = getTotalNumInputChannels();
-	auto totalNumOutputChannels = getTotalNumOutputChannels();
+	const auto totalNumInputChannels = getTotalNumInputChannels();
+	const auto totalNumOutputChannels = getTotalNumOutputChannels();
 
 	// In case we have more outputs than inputs, this code clears any output
 	// channels that didn't contain input data, (because these aren't
@@ -132,22 +133,22 @@ void VisualizerAudioProcessor::processBlock(AudioBuffer<float>& buffer,
 	}
 }
 
-bool VisualizerAudioProcessor::hasEditor() const {
+bool VisualizerProcessor::hasEditor() const {
 	return true; // (change this to false if you choose to not supply an editor)
 }
 
-AudioProcessorEditor* VisualizerAudioProcessor::createEditor() {
-	return new VisualizerAudioProcessorEditor(*this);
+AudioProcessorEditor* VisualizerProcessor::createEditor() {
+	return new VisualizerEditor(*this);
 }
 
-void VisualizerAudioProcessor::getStateInformation(MemoryBlock& destData) {
+void VisualizerProcessor::getStateInformation(MemoryBlock& destData) {
 	// You should use this method to store your parameters in the memory block.
 	// You could do that either as raw data, or use the XML or ValueTree classes
 	// as intermediaries to make it easy to save and load complex data.
 	ignoreUnused(destData);
 }
 
-void VisualizerAudioProcessor::setStateInformation(const void* data, int sizeInBytes) {
+void VisualizerProcessor::setStateInformation(const void* data, int sizeInBytes) {
 	// You should use this method to restore your parameters from this memory block,
 	// whose contents will have been created by the getStateInformation() call.
 	ignoreUnused(data, sizeInBytes);
@@ -155,5 +156,5 @@ void VisualizerAudioProcessor::setStateInformation(const void* data, int sizeInB
 
 // This creates new instances of the plugin...
 AudioProcessor*JUCE_CALLTYPE createPluginFilter() {
-	return new VisualizerAudioProcessor();
+	return new VisualizerProcessor();
 }

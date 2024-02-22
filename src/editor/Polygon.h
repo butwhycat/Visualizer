@@ -27,9 +27,9 @@ public:
 	}
 
 	vector<Point2D*>* vertices;
+	Point2D center;
 
 private:
-	Point2D center;
 	float edgeLength;
 	int numEdges;
 };

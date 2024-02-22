@@ -106,6 +106,7 @@ target_link_libraries(Visualizer
 		PRIVATE
 		# VisualizerData           # If we'd created a binary data target, we'd link to it here
 		juce::juce_audio_utils
+		juce::juce_opengl
 		PUBLIC
 		juce::juce_recommended_config_flags
 		juce::juce_recommended_lto_flags
