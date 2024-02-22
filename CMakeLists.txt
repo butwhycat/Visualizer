@@ -67,11 +67,18 @@ juce_add_plugin(Visualizer
 # Finally, we supply a list of source files that will be built into the target. This is a standard
 # CMake command.
 
+file(GLOB_RECURSE SOURCES "src/*.cpp")
+file(GLOB_RECURSE HEADERS "src/*.h")
+
 target_sources(Visualizer
 		PRIVATE
-		src/editor/Polygon.h
-		src/editor/PluginEditor.cpp
-		src/processor/PluginProcessor.cpp)
+		#		src/editor/Polygon.h
+		#		src/editor/OpenGLComponent.h
+		#		src/editor/PluginEditor.cpp
+		#		src/processor/PluginProcessor.cpp)
+		${SOURCES}
+		${HEADERS}
+)
 
 # `target_compile_definitions` adds some preprocessor definitions to our target. In a Projucer
 # project, these might be passed in the 'Preprocessor Definitions' field. JUCE modules also make use

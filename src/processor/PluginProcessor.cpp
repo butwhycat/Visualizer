@@ -1,7 +1,7 @@
 #include "PluginProcessor.h"
 #include "../editor/PluginEditor.h"
 
-VisualizerProcessor::VisualizerProcessor()
+Processor::Processor()
 	: AudioProcessor(BusesProperties()
 #if !JucePlugin_IsMidiEffect
 #if !JucePlugin_IsSynth
@@ -12,13 +12,13 @@ VisualizerProcessor::VisualizerProcessor()
 	) {
 }
 
-VisualizerProcessor::~VisualizerProcessor() = default;
+Processor::~Processor() = default;
 
-const String VisualizerProcessor::getName() const {
+const String Processor::getName() const {
 	return JucePlugin_Name;
 }
 
-bool VisualizerProcessor::acceptsMidi() const {
+bool Processor::acceptsMidi() const {
 #if JucePlugin_WantsMidiInput
 	return true;
 #else
@@ -26,7 +26,7 @@ bool VisualizerProcessor::acceptsMidi() const {
 #endif
 }
 
-bool VisualizerProcessor::producesMidi() const {
+bool Processor::producesMidi() const {
 #if JucePlugin_ProducesMidiOutput
 	return true;
 #else
@@ -34,7 +34,7 @@ bool VisualizerProcessor::producesMidi() const {
 #endif
 }
 
-bool VisualizerProcessor::isMidiEffect() const {
+bool Processor::isMidiEffect() const {
 #if JucePlugin_IsMidiEffect
 	return true;
 #else
@@ -42,45 +42,45 @@ bool VisualizerProcessor::isMidiEffect() const {
 #endif
 }
 
-double VisualizerProcessor::getTailLengthSeconds() const {
+double Processor::getTailLengthSeconds() const {
 	return 0.0;
 }
 
-int VisualizerProcessor::getNumPrograms() {
+int Processor::getNumPrograms() {
 	return 1;
 	// NB: some hosts don't cope very well if you tell them there are 0 programs,
 	// so this should be at least 1, even if you're not really implementing programs.
 }
 
-int VisualizerProcessor::getCurrentProgram() {
+int Processor::getCurrentProgram() {
 	return 0;
 }
 
-void VisualizerProcessor::setCurrentProgram(int index) {
+void Processor::setCurrentProgram(int index) {
 	ignoreUnused(index);
 }
 
-const String VisualizerProcessor::getProgramName(int index) {
+const String Processor::getProgramName(int index) {
 	ignoreUnused(index);
 	return {};
 }
 
-void VisualizerProcessor::changeProgramName(int index, const String& newName) {
+void Processor::changeProgramName(int index, const String& newName) {
 	ignoreUnused(index, newName);
 }
 
-void VisualizerProcessor::prepareToPlay(double sampleRate, int samplesPerBlock) {
+void Processor::prepareToPlay(double sampleRate, int samplesPerBlock) {
 	// Use this method as the place to do any pre-playback
 	// initialisation that you need...
 	ignoreUnused(sampleRate, samplesPerBlock);
 }
 
-void VisualizerProcessor::releaseResources() {
+void Processor::releaseResources() {
 	// When playback stops, you can use this as an opportunity to free up any
 	// spare memory, etc.
 }
 
-bool VisualizerProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const {
+bool Processor::isBusesLayoutSupported(const BusesLayout& layouts) const {
 #if JucePlugin_IsMidiEffect
 	ignoreUnused (layouts);
 	return true;
@@ -103,7 +103,7 @@ bool VisualizerProcessor::isBusesLayoutSupported(const BusesLayout& layouts) con
 #endif
 }
 
-void VisualizerProcessor::processBlock(AudioBuffer<float>& buffer,
+void Processor::processBlock(AudioBuffer<float>& buffer,
                                        MidiBuffer& midiMessages) {
 	ignoreUnused(midiMessages);
 
@@ -133,22 +133,22 @@ void VisualizerProcessor::processBlock(AudioBuffer<float>& buffer,
 	}
 }
 
-bool VisualizerProcessor::hasEditor() const {
+bool Processor::hasEditor() const {
 	return true; // (change this to false if you choose to not supply an editor)
 }
 
-AudioProcessorEditor* VisualizerProcessor::createEditor() {
-	return new VisualizerEditor(*this);
+AudioProcessorEditor* Processor::createEditor() {
+	return new Editor(*this);
 }
 
-void VisualizerProcessor::getStateInformation(MemoryBlock& destData) {
+void Processor::getStateInformation(MemoryBlock& destData) {
 	// You should use this method to store your parameters in the memory block.
 	// You could do that either as raw data, or use the XML or ValueTree classes
 	// as intermediaries to make it easy to save and load complex data.
 	ignoreUnused(destData);
 }
 
-void VisualizerProcessor::setStateInformation(const void* data, int sizeInBytes) {
+void Processor::setStateInformation(const void* data, int sizeInBytes) {
 	// You should use this method to restore your parameters from this memory block,
 	// whose contents will have been created by the getStateInformation() call.
 	ignoreUnused(data, sizeInBytes);
@@ -156,5 +156,5 @@ void VisualizerProcessor::setStateInformation(const void* data, int sizeInBytes)
 
 // This creates new instances of the plugin...
 AudioProcessor*JUCE_CALLTYPE createPluginFilter() {
-	return new VisualizerProcessor();
+	return new Processor();
 }

@@ -11,11 +11,11 @@ using std::arg;
 #define DEFAULT_NUM_EDGES 8
 #define DEFAULT_EDGE_LEN (WIDTH/5.0f)
 
-VisualizerEditor::VisualizerEditor(
-	VisualizerProcessor& p)
-	: AudioProcessorEditor(&p), processorRef(p) {
+Editor::Editor(Processor& p) : AudioProcessorEditor(&p), processorRef(p) {
 	ignoreUnused(processorRef);
-	openGlContext.attachTo(*getTopLevelComponent());
+	addAndMakeVisible(openGLComponent);
+	openGLComponent.setBounds(0, 0, 400, 300);
+
 	this->defaultCenter = new Point2D(static_cast<float>(WIDTH) / 2.0f,
 	                                  static_cast<float>(HEIGHT) / 2.0f);
 	this->polygons = new vector<Polygon*>();
@@ -28,31 +28,30 @@ VisualizerEditor::VisualizerEditor(
 	startTimer(100);
 }
 
-VisualizerEditor::~VisualizerEditor() {
+Editor::~Editor() {
 	delete this->polygons;
 }
 
-void VisualizerEditor::drawFrame(Graphics& g) const {
-	VisualizerEditor::drawBackground(g);
+void Editor::drawFrame(Graphics& g) const {
+	Editor::drawBackground(g);
 	this->drawPolygons(g);
 }
 
-void VisualizerEditor::paint(Graphics& graphics) {
-	this->drawFrame(graphics);
-	this->prepareForNextFrame();
-	repaint();
+void Editor::paint(Graphics& graphics) {
+	// this->drawFrame(graphics);
+	// this->prepareForNextFrame();
 }
 
-void VisualizerEditor::resized() {
+void Editor::resized() {
 	// This is generally where you'll want to lay out the positions of any
 	// subcomponents in your editor...
 }
 
-void VisualizerEditor::prepareForNextFrame() const {
+void Editor::prepareForNextFrame() const {
 	for (const Polygon* polygon: *this->polygons) {
 		for (Point2D* point: *polygon->vertices) {
 			const auto rotationAngle = arg<float>(*point);
-			const complex<float> rotationVector = polar(0.5f, rotationAngle);
+			const complex<float> rotationVector = polar(1.0f, rotationAngle);
 
 			complex<float> translatedPoint = *point - polygon->center;
 
@@ -62,7 +61,7 @@ void VisualizerEditor::prepareForNextFrame() const {
 	}
 }
 
-void VisualizerEditor::drawPolygons(Graphics& g) const {
+void Editor::drawPolygons(Graphics& g) const {
 	g.setColour(Colours::orange);
 	for (const Polygon* polygon: *this->polygons) {
 		juce::Path path;
@@ -77,10 +76,10 @@ void VisualizerEditor::drawPolygons(Graphics& g) const {
 	}
 }
 
-void VisualizerEditor::drawBackground(Graphics& g) {
+void Editor::drawBackground(Graphics& g) {
 	g.fillAll(Colours::black);
 }
 
-void VisualizerEditor::timerCallback() {
+void Editor::timerCallback() {
 	repaint();
 }

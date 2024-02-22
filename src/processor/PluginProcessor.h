@@ -4,11 +4,11 @@
 
 using namespace juce;
 
-class VisualizerProcessor final : public AudioProcessor {
+class Processor final : public AudioProcessor {
 public:
-	VisualizerProcessor();
+	Processor();
 
-	~VisualizerProcessor() override;
+	~Processor() override;
 
 	void prepareToPlay(double sampleRate, int samplesPerBlock) override;
 
@@ -49,5 +49,5 @@ public:
 	void setStateInformation(const void* data, int sizeInBytes) override;
 
 private:
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(VisualizerProcessor)
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Processor)
 };

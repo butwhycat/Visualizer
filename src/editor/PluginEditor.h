@@ -1,7 +1,7 @@
 #pragma once
 
 #include <complex>
-#include <juce_opengl/juce_opengl.h>
+#include "OpenGLComponent.h"
 #include "../processor/PluginProcessor.h"
 #include "Polygon.h"
 
@@ -9,13 +9,12 @@ typedef std::complex<float> Point2D;
 
 using namespace juce;
 
-class VisualizerEditor final : public AudioProcessorEditor, public Timer {
+class Editor final : public AudioProcessorEditor, public Timer {
 public:
-	explicit VisualizerEditor(
-		VisualizerProcessor&);
+	explicit Editor(
+		Processor&);
 
-	~VisualizerEditor() override;
-
+	~Editor() override;
 
 	void paint(Graphics&) override;
 
@@ -34,11 +33,11 @@ private:
 
 	// This reference is provided as a quick way for your editor to
 	// access the processor object that created it.
-	VisualizerProcessor& processorRef;
+	Processor& processorRef;
 
 	Point2D* defaultCenter;
 	vector<Polygon*>* polygons;
-	OpenGLContext openGlContext;
+	OpenGLComponent openGLComponent;
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(VisualizerEditor)
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Editor)
 };
